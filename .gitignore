@@ -12,6 +12,9 @@
 *.iws
 *.iml
 *.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
 
 ### 防止macOS上传该文件夹 ###
 .DS_Store
