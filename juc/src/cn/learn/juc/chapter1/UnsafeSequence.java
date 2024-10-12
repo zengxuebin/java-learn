@@ -1,6 +1,6 @@
 package cn.learn.juc.chapter1;
 
-import cn.learn.juc.chapter1.anno.NotThreadSafe;
+import cn.learn.juc.anno.NotThreadSafe;
 
 import java.util.concurrent.TimeUnit;
 

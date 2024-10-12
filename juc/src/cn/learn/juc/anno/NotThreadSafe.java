@@ -1,4 +1,4 @@
-package cn.learn.juc.chapter1.anno;
+package cn.learn.juc.anno;
 
 import java.lang.annotation.*;
 
