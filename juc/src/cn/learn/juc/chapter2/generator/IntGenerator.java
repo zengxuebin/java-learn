@@ -1,4 +1,4 @@
-package cn.learn.juc.chapter2;
+package cn.learn.juc.chapter2.generator;
 
 /**
  * int生成器

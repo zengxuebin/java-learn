@@ -1,4 +1,4 @@
-package cn.learn.juc.chapter2;
+package cn.learn.juc.chapter2.generator;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
