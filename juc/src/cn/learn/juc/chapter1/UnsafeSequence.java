@@ -25,6 +25,7 @@ public class UnsafeSequence {
     }
 
     public synchronized int getSafeNext() {
+        // 虽然是紧凑的语法 但是包含了三个操作 读取-修改-写入 并非原子操作
         return value++;
     }
 
