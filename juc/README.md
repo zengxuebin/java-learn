@@ -304,3 +304,23 @@
 - 示例详见[TestHarness.java](src/cn/learn/juc/chapter5/latch/TestHarness.java)
   - 启动门将使得住线程能够同时释放所有工作线程，而结束门则使主线程能够等待最后一个线程执行完成，而不是顺序地等待每个线程执行完成。
 - CountDownLatch的最佳实践：将一个任务分解为n个互相独立可解决的任务，并创建值为n的CountDownLatch进行处理。
+#### 5.5.2 FutureTask
+- FutureTask也可以用作闭锁（FutureTask实现了Future的语义，标识一种抽象的可生成结果的计算）。FutureTask标识的计算时通过Callable实现的，相当于一种可生成结果的Runnable，并且可以处于以下三种状态：等待运行（Waiting to run），正在运行（Running）和运行完成（Completed）。“执行完成”表示计算的所有可能结束方式，包括正常结束、由于取消而结束和由于异常结束等。
+- 当FutureTask进入完成状态后，它会永远停止在这个状态上。
+- Future.get的行为取决于任务的状态。如果任务创建已经完成，那么get会立即返回结果，否则get将阻塞直到任务进入完成状态，然后返回结果或者抛出异常。
+  - FutureTask将计算结果从执行计算的线程传递到获取这个结果的线程，而FutureTask的规范确保了这种传递过程能实现结果的安全发布。
+    - Callable表示的任务可以抛出受检查异常的或未受检查的异常，并且任何代码都可能抛出一个Error。无论任务代码抛出什么异常，都会被封装到一个ExecutionException中，并在Future.get中被重新抛出。
+      - 这将使调用get的代码变得复杂，因为它不仅需要处理可能出现的ExecutionException（以及未检查的CancellationException），而且还由于Execution Exception是作为一个Throwable类返回的，因此处理起来并不容易。
+        ```java
+        import java.util.concurrent.ExecutionException;       
+        try {
+            futureTask.get();
+        } catch (ExecutionException e) {
+            Throwable cause = e.getCause();
+            // 细分异常 call方法默认抛出Exception
+            if (cause instanceof RuntimeException) {
+                throw (RuntimeException) cause;
+            }
+        }
+         ```
+        
