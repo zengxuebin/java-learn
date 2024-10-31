@@ -43,6 +43,7 @@ public class Pool<T> {
     }
 
     public T checkOut() throws InterruptedException {
+        // 获取凭证
         available.acquire();
         return getItem();
     }
